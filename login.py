@@ -24,69 +24,73 @@ class LoginWindow:
         title.place(x=0, y=0, width=1550, height=70)
         
         # Login frame
-        frame = Frame(self.root, bg="black")
-        frame.place(x=610, y=200, width=340, height=430)
+        frame = Frame(self.root, bg="#181818")  # Darker background for modern look
+        frame.place(x=550, y=170, width=450, height=500)
         
-        # Icon in the login window
+        # Icon in the login window (centered above the form)
         img_icon = Image.open("images/LoginIconAppl.png")
-        img_icon = img_icon.resize((90, 90), Image.Resampling.LANCZOS)  # Changed from ANTIALIAS
+        img_icon = img_icon.resize((80, 80), Image.Resampling.LANCZOS)
         self.photo_img_icon = ImageTk.PhotoImage(img_icon)
-        lbl_img_icon = Label(self.root, image=self.photo_img_icon, bg="black", borderwidth=0)
-        lbl_img_icon.place(x=730, y=200, width=90, height=90)
+        lbl_img_icon = Label(frame, image=self.photo_img_icon, bg="#181818", borderwidth=0)
+        lbl_img_icon.place(x=185, y=20, width=80, height=80)
         
         # Login header
-        get_str = Label(frame, text="Admin Login", font=("Times New Roman", 20, "bold"),
-                        fg="white", bg="black")
-        get_str.place(x=95, y=85)
+        get_str = Label(frame, text="Admin Login", font=("Times New Roman", 26, "bold"),
+                        fg="#fff", bg="#181818")
+        get_str.place(x=120, y=110)
         
         # Variables for username and password
         self.txtuser = StringVar()
         self.txtpass = StringVar()
         
-        # Username
-        username_lbl = Label(frame, text="Email", font=("Times New Roman", 12, "bold"),
-                             fg="white", bg="black")
-        username_lbl.place(x=70, y=125)
-        txtuser_entry = ttk.Entry(frame, textvariable=self.txtuser, font=("Times New Roman", 15, "bold"))
-        txtuser_entry.place(x=40, y=150, width=270)
-        
-        # Password
-        password_lbl = Label(frame, text="Password", font=("Times New Roman", 12, "bold"),
-                             fg="white", bg="black")
-        password_lbl.place(x=70, y=195)
-        txtpass_entry = ttk.Entry(frame, textvariable=self.txtpass, font=("Times New Roman", 15, "bold"), show="*")
-        txtpass_entry.place(x=40, y=220, width=270)
-        
-        # Additional icons (optional)
+        # Load icons once
         img_user_icon = Image.open("images/LoginIconAppl.png")
-        img_user_icon = img_user_icon.resize((25, 25), Image.Resampling.LANCZOS)  # Changed from ANTIALIAS
+        img_user_icon = img_user_icon.resize((22, 22), Image.Resampling.LANCZOS)
         self.photo_img_user_icon = ImageTk.PhotoImage(img_user_icon)
-        lbl_user_icon = Label(self.root, image=self.photo_img_user_icon, bg="black", borderwidth=0)
-        lbl_user_icon.place(x=650, y=323, width=25, height=25)
         
         img_lock_icon = Image.open("images/lock-512.png")
-        img_lock_icon = img_lock_icon.resize((25, 25), Image.Resampling.LANCZOS)  # Changed from ANTIALIAS
+        img_lock_icon = img_lock_icon.resize((22, 22), Image.Resampling.LANCZOS)
         self.photo_img_lock_icon = ImageTk.PhotoImage(img_lock_icon)
-        lbl_lock_icon = Label(self.root, image=self.photo_img_lock_icon, bg="black", borderwidth=0)
-        lbl_lock_icon.place(x=650, y=395, width=25, height=25)
         
-        # Login button
-        btn_login = Button(frame, text="Login", borderwidth=3, relief=RAISED,
+        # Email label and entry with icon
+        username_lbl = Label(frame, text="Email", font=("Segoe UI", 13, "bold"),
+                             fg="#fff", bg="#181818")
+        username_lbl.place(x=60, y=160)
+        user_entry_bg = Frame(frame, bg="#fff", bd=1, relief=SOLID)
+        user_entry_bg.place(x=60, y=190, width=330, height=36)
+        lbl_user_icon = Label(user_entry_bg, image=self.photo_img_user_icon, bg="#fff")
+        lbl_user_icon.place(x=5, y=5)
+        txtuser_entry = ttk.Entry(user_entry_bg, textvariable=self.txtuser, font=("Segoe UI", 12), width=26)
+        txtuser_entry.place(x=35, y=2, height=30)
+        
+        # Password label and entry with icon
+        password_lbl = Label(frame, text="Password", font=("Segoe UI", 13, "bold"),
+                             fg="#fff", bg="#181818")
+        password_lbl.place(x=60, y=240)
+        pass_entry_bg = Frame(frame, bg="#fff", bd=1, relief=SOLID)
+        pass_entry_bg.place(x=60, y=270, width=330, height=36)
+        lbl_lock_icon = Label(pass_entry_bg, image=self.photo_img_lock_icon, bg="#fff")
+        lbl_lock_icon.place(x=5, y=5)
+        txtpass_entry = ttk.Entry(pass_entry_bg, textvariable=self.txtpass, font=("Segoe UI", 12), width=26, show="*")
+        txtpass_entry.place(x=35, y=2, height=30)
+        
+        # Login button - centered and styled
+        btn_login = Button(frame, text="Login", borderwidth=0, relief=RAISED,
                            command=self.login, cursor="hand2",
-                           font=("Times New Roman", 16, "bold"), fg="white", bg="red",
-                           activebackground="#B00857")
-        btn_login.place(x=110, y=270, width=120, height=35)
+                           font=("Segoe UI", 15, "bold"), fg="#fff", bg="#e74c3c",
+                           activebackground="#c0392b", activeforeground="#fff")
+        btn_login.place(x=140, y=330, width=170, height=45)
         
-        # Register and Forgot Password buttons
+        # Register and Forgot Password buttons - styled as links
         registerbtn = Button(frame, text="New User Register", command=self.register_window,
-                             font=("Times New Roman", 10, "bold"), borderwidth=0,
-                             fg="white", bg="black", activeforeground="white", activebackground="black")
-        registerbtn.place(x=15, y=320, width=160)
-        
-        forgetbtn = Button(frame, text="Forget Password", command=self.forgot_password_window,
-                           font=("Times New Roman", 10, "bold"), borderwidth=0,
-                           fg="white", bg="black", activeforeground="white", activebackground="black")
-        forgetbtn.place(x=10, y=340, width=160)
+                             font=("Segoe UI", 11, "underline"), borderwidth=0,
+                             fg="#3498db", bg="#181818", activeforeground="#2980b9", activebackground="#181818", cursor="hand2")
+        registerbtn.place(x=140, y=390, width=170)
+
+        forgetbtn = Button(frame, text="Forgot Password", command=self.forgot_password_window,
+                           font=("Segoe UI", 11, "underline"), borderwidth=0,
+                           fg="#3498db", bg="#181818", activeforeground="#2980b9", activebackground="#181818", cursor="hand2")
+        forgetbtn.place(x=140, y=420, width=170)
         
     def register_window(self):
         self.new_window = Toplevel(self.root)
